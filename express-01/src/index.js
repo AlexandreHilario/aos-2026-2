@@ -9,8 +9,14 @@ app.set('trust proxy', true);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// middleware the logs
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path} - ${req.ip}`);
+  next();
+});
+// middleware de autenticação "fake"
+app.use((req, res, next) => {
+  req.me = users[1];
   next();
 });
 
@@ -79,6 +85,7 @@ app.post('/messages', (req, res) => {
   const message = {
     id,
     text: req.body?.text,
+    userId: req.me.id,
   };
 
   messages[id] = message;
@@ -86,6 +93,25 @@ app.post('/messages', (req, res) => {
   return res.send(message);
 });
 
+app.delete('/messages/:messageId', (req, res) => {
+  const {
+    [req.params.messageId]: message,
+    ...otherMessages
+  } = messages;
+
+  messages = otherMessages;
+
+  return res.send(message);
+
+  // o código a seguir mostra outra maneira de fazer essa remoção
+  // const message = messages[req.params.messageId];
+  // delete messages[req.params.messageId];
+  // return res.send(message);
+});
+
+app.get('/session', (req, res) => {
+  return res.send(users[req.me.id]);
+});
 
 const port = process.env.PORT || 3000;
 
