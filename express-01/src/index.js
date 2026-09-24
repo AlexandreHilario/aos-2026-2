@@ -5,7 +5,7 @@ import express from "express";
 import models, { sequelize } from "./models/index.js";
 import routes from "./routes/index.js";
 import middlewares from "./middlewares/index.js";
-import createUsersWithMessages from "./utils/bootstrap.js";
+import utils from "./utils/index.js";
 
 const app = express();
 
@@ -34,7 +34,7 @@ const eraseDatabaseOnSync = process.env.ERASE_DATABASE_ON_SYNC === "true";
 
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   if (eraseDatabaseOnSync) {
-    await createUsersWithMessages();
+    await utils.createUsersWithMessages();
   }
 
   app.listen(port, () => console.log(`Example app listening on port ${port}!`));
