@@ -45,6 +45,22 @@ const createMessage = async (req, res) => {
   return res.status(201).send(message);
 };
 
+const updateMessage = async (req, res) => {
+  if (!ensureAuthenticated(req, res)) return;
+
+  const message = await messageService.updateMessage(
+    req.context.models,
+    req.params.messageId,
+    req.body.text,
+  );
+
+  if (!message) {
+    return res.status(404).send({ error: "Message not found" });
+  }
+
+  return res.status(200).send(message);
+};
+
 const deleteMessage = async (req, res) => {
   if (!ensureAuthenticated(req, res)) return;
 
@@ -56,5 +72,6 @@ export default {
   listMessages,
   getMessageById,
   createMessage,
+  updateMessage,
   deleteMessage,
 };

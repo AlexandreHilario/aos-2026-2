@@ -17,15 +17,41 @@ const getUserById = async (req, res) => {
   return res.status(200).send(user);
 };
 
-const createUser = (req, res) => {
-  return res.status(201).send("POST HTTP method on user resource");
+const createUser = async (req, res) => {
+  const user = await userService.createUser(
+    req.context.models,
+    req.body.username,
+    req.body.email,
+  );
+
+  return res.status(201).send(user);
 };
 
-const updateUser = (req, res) => {
-  return res.status(200).send(`PUT HTTP method on user/${req.params.userId} resource`);
+const updateUser = async (req, res) => {
+  const user = await userService.updateUser(
+    req.context.models,
+    req.params.userId,
+    req.body.username,
+    req.body.email,
+  );
+
+  if (!user) {
+    return res.status(404).send({ error: "User not found" });
+  }
+
+  return res.status(200).send(user);
 };
 
-const deleteUser = (req, res) => {
+const deleteUser = async (req, res) => {
+  const deletedCount = await userService.deleteUser(
+    req.context.models,
+    req.params.userId,
+  );
+
+  if (!deletedCount) {
+    return res.status(404).send({ error: "User not found" });
+  }
+
   return res.status(204).send();
 };
 
