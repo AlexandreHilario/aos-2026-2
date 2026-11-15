@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import assert from 'node:assert/strict';
 import models, { sequelize } from '../src/models/index.js';
-import { createApp } from '../src/app.js';
+import { createApp } from '../src/createApp.js';
 
 let server;
 let objectId;

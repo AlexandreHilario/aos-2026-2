@@ -19,7 +19,8 @@ O servidor escuta em `http://localhost:3000`. Sequelize cria as tabelas ausentes
 ## Estrutura
 
 - `src/index.js`: inicializacao local e sincronizacao do banco.
-- `src/app.js`: configuracao Express e tratamento de erros.
+- `src/createApp.js`: configuracao Express e tratamento de erros.
+- `src/app.js`: entrada Express detectada pela Vercel, com exportacao padrao do aplicativo.
 - `src/models/tarefa.js`: modelo Sequelize, UUID gerado pelo backend.
 - `src/routes/tarefa.js`: rotas `/tarefas`.
 - `src/controllers/tarefaController.js`: validacao e respostas HTTP.

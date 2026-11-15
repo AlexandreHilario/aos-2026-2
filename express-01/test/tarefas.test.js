@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createApp } from '../src/app.js';
+import { createApp } from '../src/createApp.js';
 import { randomUUID } from 'node:crypto';
 
 test('CRUD HTTP, UUID, valores padrao, validacao e registros inexistentes', async t => {
