@@ -9,8 +9,7 @@ import middlewares from "./middlewares/index.js";
 import AppError from "./utils/appError.js";
 import Sequelize from "sequelize";
 
-export function createApp(models, initialize = async () => {}) {
-  const app = express();
+export function createApp(models, initialize = async () => {}, app = express()) {
   
   app.set("trust proxy", true);
   
