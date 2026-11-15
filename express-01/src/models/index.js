@@ -3,15 +3,19 @@ import pg from "pg";
 
 import getUserModel from "./user.js";
 import getMessageModel from "./message.js";
+import getTarefaModel from "./tarefa.js";
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   dialectModule: pg,
+  logging: false,
+  pool: { max: 2, min: 0, idle: 10000, acquire: 30000 },
 });
 
 const models = {
   User: getUserModel(sequelize, Sequelize),
   Message: getMessageModel(sequelize, Sequelize),
+  Tarefa: getTarefaModel(sequelize, Sequelize),
 };
 
 Object.keys(models).forEach((key) => {
